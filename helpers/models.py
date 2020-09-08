@@ -6,9 +6,11 @@ class TasksStatus(str, Enum):
     to_do = "to-do"
     done = "done"
 
-class BaseTask(BaseModel):
+class TaskSubtitle(BaseModel):
+    subtitle: Optional[str] = Field(None, min_length=3, max_length=50)
+
+class BaseTask(TaskSubtitle):
     title: str =  Field(..., min_length=3, max_length=30, description="Título da tarefa")
-    subtitle: Optional[str] = Field("", min_length=3, max_length=50)
 
 class OutTask(BaseTask):
     status: TasksStatus = TasksStatus.to_do.value
@@ -16,3 +18,7 @@ class OutTask(BaseTask):
 
 class InTask(BaseTask):
     pass
+
+class PatchTask(TaskSubtitle):
+    status: Optional[TasksStatus] = Field(None)
+

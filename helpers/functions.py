@@ -12,8 +12,8 @@ def filter_tasks(global_tasks: List[OutTask], status: TasksStatus) -> List[OutTa
             response.append(task)
     return response
 
-def find_task(global_tasks: List[OutTask], id: str) -> OutTask or None:
-    for task in global_tasks:
-        if task.id == id:
-            return task
+def find_task_by_id(global_tasks: List[OutTask], id: str) -> (OutTask, int) or None:
+    for index in range(len(global_tasks)):
+        if global_tasks[index].id == id:
+            return global_tasks[index], index
     return None
