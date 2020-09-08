@@ -29,10 +29,11 @@ async def delete_task(task_id: str = Query(..., min_length=11, max_length=11)):
         return task
     raise HTTPException(status_code=404, detail="Tarefa não encontrada")
 
-@app.patch("/tasks/{task_id}")
+@app.patch("/tasks/{task_id}", response_model = OutTask)
 async def patch_task(
     task_id: str = Query(..., min_length=11, max_length=11), 
     partial_task: PatchTask = Body(...)):
+    
     task, index = find_task_by_id(global_tasks, task_id)
     if task:
         update_data = partial_task.dict(exclude_unset=True)
