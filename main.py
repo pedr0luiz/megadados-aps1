@@ -3,17 +3,17 @@ from enum import Enum
 from typing import Optional, List
 from pydantic import BaseModel, Field
 import secrets
-from models.models import OutTask, InTask, TasksStatus
-from helpers.helpers import generate_random_id, filter_tasks, find_task
+from helpers.models import OutTask, InTask, TasksStatus
+from helpers.functions import generate_random_id, filter_tasks, find_task
  
 app = FastAPI(title="APS 1", description="Gabriel Zezze e Pedro Luiz", version="0.0.1")
 
-global_tasks = []
+global_tasks: List[OutTask] = []
 
 @app.post("/tasks", response_model = OutTask, status_code=201)
 async def create_task(task: InTask):
     out_task = OutTask(**task.dict(), id=generate_random_id())
-    global_tasks.append(out_task.dict())
+    global_tasks.append(out_task)
     return out_task
 
 @app.get("/tasks", response_model = List[OutTask])
@@ -24,8 +24,8 @@ async def get_tasks(status: Optional[TasksStatus] = None):
 @app.delete("/tasks", response_model = OutTask, status_code = 202)
 async def delete_task(id: str = Query(..., min_length=11, max_length=11)):
     task = find_task(global_tasks, id)
-    global_tasks.remove(task)
     if task:
+        global_tasks.remove(task)
         return task
     raise HTTPException(status_code=404, detail="Tarefa não encontrada")
 
