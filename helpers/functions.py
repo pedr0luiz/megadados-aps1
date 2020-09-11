@@ -16,4 +16,4 @@ def find_task_by_id(global_tasks: List[OutTask], id: str) -> (OutTask, int) or N
     for index in range(len(global_tasks)):
         if global_tasks[index].id == id:
             return global_tasks[index], index
-    return None
+    return None, None
