@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from helpers.models import InTask
+from api.models import InTask
 from main import app
 
 client = TestClient(app)

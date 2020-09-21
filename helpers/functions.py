@@ -1,6 +1,6 @@
 import secrets
 from typing import List
-from helpers.models import TasksStatus, OutTask
+from api.models import TasksStatus, OutTask
 
 def generate_random_id() -> str:
     return secrets.token_urlsafe(8)
