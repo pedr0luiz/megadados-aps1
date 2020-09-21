@@ -25,4 +25,9 @@ class PatchTask(TaskSubtitle):
 class NotFoundResponse(BaseModel):
     detail: str = Field(..., description="Motivo de falha na requisição", example="Tarefa <id da tarefa pesquisada> não encontrada")
 
-
+not_found_response_model = {
+    404: {
+        "description": "Tarefa não encontrada",
+        "model": NotFoundResponse
+    }
+}
